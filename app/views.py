@@ -2,15 +2,32 @@ from django.shortcuts import render
 
 # Create your views here.
 from app.models import *
+from django.db.models.functions import Length
 def display_topic(request):
     QSTO=Topic.objects.all()
+    
+    QSTO=Topic.objects.exclude(Topic_name='koko')
+    QSTO=Topic.objects.filter(Topic_name='freefire')
+    QSTO=Topic.objects.all()[1:3:1]
+
+
     d={'QSTO':QSTO}
     return render(request,'display_topic.html',d)
 
 def display_webpage(request):
     QSWO=webpage.objects.all()
+    QSWO=webpage.objects.all().order_by('name')
+    QSWO=webpage.objects.all().order_by('-name')
+    QSWO=webpage.objects.order_by(Length('name'))
+    QSWO=webpage.objects.order_by(Length('Topic_name').desc())
+    QSWO=webpage.objects.order_by(Length('name'))
+    QSWO=webpage.objects.filter(Topic_name='koko')
+    QSWO=webpage.objects.exclude(Topic_name='freefire')
     d={'QSWO':QSWO}
     return render(request,'display_webpage.html',d)
+
+   
+
 def display_Access(request):
     QSAO=AccessRecords.objects.all()
     d={'QSAO':QSAO}
@@ -23,6 +40,7 @@ def insert_topic(request):
     QSTO=Topic.objects.all()
     d={'QSTO':QSTO}
     return render(request,'display_topic.html',d)
+
 def insert_webpage(request):
     tn=input('enter topic_name')
     to=Topic.objects.get(topic_name=tn)
