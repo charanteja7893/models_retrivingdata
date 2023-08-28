@@ -23,6 +23,11 @@ def display_webpage(request):
     QSWO=webpage.objects.order_by(Length('name'))
     QSWO=webpage.objects.filter(Topic_name='koko')
     QSWO=webpage.objects.exclude(Topic_name='freefire')
+    QSWO=webpage.objects.filter(name__startswith='l')
+    QSWO=webpage.objects.filter(name__endswith='h')
+    QSWO=webpage.objects.filter(name__contains='s')
+    QSWO=webpage.objects.filter(name__regex=r'a')
+   
     d={'QSWO':QSWO}
     return render(request,'display_webpage.html',d)
 
@@ -30,6 +35,14 @@ def display_webpage(request):
 
 def display_Access(request):
     QSAO=AccessRecords.objects.all()
+    QSAO=AccessRecords.objects.filter(date__month='5')
+    QSAO=AccessRecords.objects.filter(date__gt='2000-03-12')
+    QSAO=AccessRecords.objects.filter(date__gte='1990-04-03')
+    QSAO=AccessRecords.objects.filter(date__lt='1998-04-03')
+    QSAO=AccessRecords.objects.filter(date__lte='2000-04-03')
+    QSAO=AccessRecords.objects.filter(date__day='1')
+    
+    
     d={'QSAO':QSAO}
     return render(request,'display_Access.html',d)
 
